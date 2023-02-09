@@ -5,16 +5,16 @@
     <main>
       <div class="todos">
         <div class="write">
-          <input type="text" v-model="inputValue" @keyup.enter="addItem"/>
-          <button class="btn add" @click="addItem()">Add</button>
+          <input ref="writeArea" type="text" v-model="inputValue" @keyup.enter="addItem"/>
+          <button class="btn add" @click="addItem">Add</button>
         </div>
         <ul class="list">
           <li v-for="(todo, i) in todos" :key="todo.i">
-            <i :class="[todo.state === 'yet' ? 'far' : 'fas', 'fa-check-square']"></i>
+            <i @click="checkItem(i)" :class="[todo.state === 'yet' ? 'far' : 'fas', 'fa-check-square']"></i>
             <span>
               {{ todo.text }}
               <b>
-                <a href="" class="edit" @click.prevent="">Edit</a>
+                <a href="" class="edit" @click.prevent="edit(i)">Edit</a>
                 <a href="" class="delete" @click.prevent="del(i)">Del</a>
               </b>
             </span>
@@ -45,12 +45,21 @@ export default {
             this.todos.unshift({text: this.inputValue, state: 'yet'})
             this.inputValue = ''
         },
+        checkItem(i) {
+            if (this.todos[i].state === 'yet') {this.todos[i].state = 'done'}
+            else {this.todos[i].state = 'yet'}
+        },
         del(i) {
             this.todos.splice(i,1)
         },
         edit(i) {
-            this.inputVlue = this.todos[i].text
+            console.log(this.todos[i].text)
+            this.inputValue = this.todos[i].text
+            this.todos.splice(i,1)
         }
+    },
+    mounted() {
+        this.$refs.writeArea.focus();
     }
 }
 </script>
