@@ -20,7 +20,7 @@ export default {
 
 /* reset */
 * {margin:0; padding:0}
-html {font-size:16px}
+html {font-size:16 px}
 body {font-family: 'Black Han Sans', sans-serif;}
 li {list-style:none;}
 a {text-decoration-line: none; color:black}
