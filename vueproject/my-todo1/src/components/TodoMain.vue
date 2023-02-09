@@ -5,7 +5,7 @@
     <main>
       <div class="todos">
         <div class="write">
-          <input type="text" v-model="inputValue"/>
+          <input type="text" v-model="inputValue" @keyup.enter="addItem"/>
           <button class="btn add" @click="addItem()">Add</button>
         </div>
         <ul class="list">
@@ -14,8 +14,8 @@
             <span>
               {{ todo.text }}
               <b>
-                <a href="">Edit</a>
-                <a href="">Del</a>
+                <a href="" class="edit" @click.prevent="">Edit</a>
+                <a href="" class="delete" @click.prevent="del(i)">Del</a>
               </b>
             </span>
           </li>
@@ -32,7 +32,6 @@ export default {
     data() {
         return {
             inputValue: '',
-            addItemText: [],
             todos:[
                 {text: '공부하기', state: 'yet'},
                 {text: '운동하기', state: 'done'},
@@ -42,8 +41,15 @@ export default {
     },
     methods: {
         addItem() {
+            if (this.inputValue === '') return;
             this.todos.unshift({text: this.inputValue, state: 'yet'})
             this.inputValue = ''
+        },
+        del(i) {
+            this.todos.splice(i,1)
+        },
+        edit(i) {
+            this.inputVlue = this.todos[i].text
         }
     }
 }
